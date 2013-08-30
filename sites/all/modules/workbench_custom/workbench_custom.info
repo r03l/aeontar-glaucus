@@ -1,0 +1,7 @@
+name = Workbench Customized for Thor
+description = Modules which enables to set permissions for specific pages
+package = Workbench
+core = 7.x
+dependencies[] = workbench
+dependencies[] = taxonomy
+version = 7.x.1.0-alpha

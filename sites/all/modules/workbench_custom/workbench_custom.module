@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_form_alter().
+ * Set the Section fields default value to General.
+ */
+function workbench_custom_form_alter(&$form, &$form_state, $form_id) {
+	if(isset($form['#node_edit_form']) && $form['#node_edit_form']==TRUE){
+		if(isset($form['workbench_access']['workbench_access'])){
+			// Get the ID for the General term
+			$tid = taxonomy_get_term_by_name('General','editorial_sub');
+			$form['workbench_access']['workbench_access']["#default_value"] = key($tid);
+		}
+	}
+}
+
+?>

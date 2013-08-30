@@ -1,0 +1,36 @@
+<?php 
+
+/**
+ * Implements hook_install().
+ * Add the taxonomy vocab which will be used in Workbench Access.
+ * Also set use for this correctly in Workbench Access.
+ */
+function workbench_custom_install() {
+	// Create the vocabulary.
+	$vocabulary = new stdClass();
+	$vocabulary->name = 'Editorial subsections';
+	$vocabulary->machine_name = 'editorial_sub';
+	$vocabulary->description = 'Taxonomy used by Workbench';
+	taxonomy_vocabulary_save($vocabulary);
+	$vid = $vocabulary->vid;
+	// Define the terms.
+	$terms[] = 'General';
+	$terms[] = 'Waldur';
+	$terms[] = 'ODIN';
+	$terms[] = 'Walhalla';
+	// Save the items
+	foreach($terms as $value) {
+		$term = new stdClass();
+		$term->name = $value;
+		$term->vid = $vid;
+		taxonomy_term_save($term);
+	}
+	
+	// Set the new vocabulary as Workbench setting
+	$workbench = variable_get('workbench_access_taxonomy');
+	$workbench['editorial_sub'] = 'editorial_sub';
+	variable_set('workbench_access_taxonomy', $workbench);
+	variable_set('workbench_access','taxonomy');
+}
+
+?>
